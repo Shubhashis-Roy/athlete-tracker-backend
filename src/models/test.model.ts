@@ -1,26 +1,43 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface ITest extends Document {
-  name: string;
-  unit: string;
-  betterIs: "higher" | "lower";
+  athleteId: mongoose.Types.ObjectId;
+  sprintTime: number;
+  verticalJump: number;
+  agilityTest: number;
+  enduranceTest: number;
+  date: Date;
 }
 
 const TestSchema: Schema = new Schema(
   {
-    name: {
-      type: String,
+    athleteId: {
+      type: Schema.Types.ObjectId,
+      ref: "Athlete",
       required: true,
-      unique: true,
+      unique: true, // 👈 important fix
+      index: true,
     },
-    unit: {
-      type: String,
-      required: true,
+
+    sprintTime: {
+      type: Number,
     },
-    betterIs: {
-      type: String,
-      enum: ["higher", "lower"],
-      required: true,
+
+    verticalJump: {
+      type: Number,
+    },
+
+    agilityTest: {
+      type: Number,
+    },
+
+    enduranceTest: {
+      type: Number,
+    },
+
+    date: {
+      type: Date,
+      default: Date.now,
     },
   },
   { timestamps: true }
